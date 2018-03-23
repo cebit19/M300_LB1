@@ -9,7 +9,7 @@ Danach wird der Prozess angestossen und die Vm oder Vm's wird/werden erstellt.
 
 ## VM Konfiguration
 
-Die VM's werden wie folgt konfiguriert. Wir haben die erste VM als "Server" erstellt; auf dieser läuft der DHCP, sowie der Apache Webserver. Die zweite VM ist die test Maschine, mit welcher wir die Website erreichen wollen, sowie die automatische IP zuordnung des DHCPs testen. Als Provieder haben wir uns für Virtualbox entschieden und als OS benutzen wir <a href="https://app.vagrantup.com/ubuntu/boxes/trusty64">Ubuntu/trusty64</a> normal und mit GUI (<a href="https://app.vagrantup.com/ubuntu/boxes/ubuntu-trusty64-gui">Ubuntu/trusty64-gui</a>)
+Die VM's werden wie folgt konfiguriert. Wir haben die erste VM als "Server" erstellt; auf dieser läuft der DHCP, sowie der Apache Webserver. Die zweite VM ist die test Maschine, mit welcher wir die Website erreichen wollen, sowie die automatische IP zuordnung des DHCPs testen. Als Provieder haben wir uns für Virtualbox entschieden und als OS benutzen wir <a href="https://app.vagrantup.com/ubuntu/boxes/trusty64">Ubuntu/trusty64</a> normal und mit GUI (<a href="https://app.vagrantup.com/igorbrites/boxes/ubuntu-trusty64-gui">Ubuntu/trusty64-gui</a>)
 
 Code der VM1:
 ```
@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
 Code der VM2:
 ```
 config.vm.define "dhcpclient" do |dhcpclient|
-    dhcpclient.vm.box = "ubuntu/trusty64-gui"
+    dhcpclient.vm.box = "igorbrites/ubuntu-trusty64-gui"
     dhcpclient.vm.hostname = "dhcpclient"
     dhcpclient.vm.network "private_network", type:"dhcp", virtualbox__intnet:true
 
@@ -59,4 +59,19 @@ udo rm /var/www/html/index.html
 
 ## DHCP Konfiguration
 
-Den DHCP haben wir wie folgt konfiguriert. Wir haben ihm den DNS von Google gegeben ( 8.8.8.8 ), sowie das subnetz 10.100.10.0, die netmask 255.255.255.0 und die ip-range 10.100.10.20 bis 10.100.10.254
+Den DHCP haben wir wie folgt konfiguriert. Wir haben ihm den DNS von Google gegeben ( 8.8.8.8 ), sowie das subnetz 10.100.10.0, die netmask 255.255.255.0 und die ip-range 10.100.10.20 bis 10.100.10.254.
+
+```
+# DHCP Server installieren
+        sudo apt-get -y install isc-dhcp-server
+        # DHCP Server konfigurieren
+        sudo sed -i 's/example.org/LB1.local/g' /etc/dhcp/dhcpd.conf
+        sudo sed -i 's/ns2.LB1.local/8.8.8.8/g' /etc/dhcp/dhcpd.conf
+        sudo sed -i 's/#authoritative/authoritative/g' /etc/dhcp/dhcpd.conf
+        sudo sed -i '$asubnet 10.100.10.0 netmask 255.255.255.0 {' /etc/dhcp/dhcpd.conf
+        sudo sed -i '$arange 10.100.10.20 10.100.10.254;' /etc/dhcp/dhcpd.conf
+        sudo sed -i '$aoption routers 10.100.10.1;' /etc/dhcp/dhcpd.conf
+        sudo sed -i '$a}' /etc/dhcp/dhcpd.conf
+        sudo sed -i 'interface enp0s9'
+		    sudo service isc-dhcp-server restart
+```
