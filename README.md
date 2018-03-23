@@ -9,7 +9,8 @@ Danach wird der Prozess angestossen und die Vm oder Vm's wird/werden erstellt.
 
 ## VM Konfiguration
 
-Die VM's werden wie folgt konfiguriert. Wir haben die erste VM als "Server" erstellt; auf dieser läuft der DHCP, sowie der Apache Webserver. Die zweite VM ist die test Maschine, mit welcher wir die Website erreichen wollen, sowie die automatische IP zuordnung des DHCPs testen. Als Provieder haben wir uns für Virtualbox entschieden und als OS benutzen wir <a href="https://app.vagrantup.com/ubuntu/boxes/trusty64">Ubuntu/trusty64</a> normal und mit GUI (<a href="https://app.vagrantup.com/igorbrites/boxes/ubuntu-trusty64-gui">Ubuntu/trusty64-gui</a>)
+Die VM's werden wie folgt konfiguriert. Wir haben die erste VM als "Server" erstellt; auf dieser läuft der DHCP, sowie der Apache Webserver. Die zweite VM ist die test Maschine, mit welcher wir die Website erreichen wollen, sowie die automatische IP zuordnung des DHCPs testen. Wir haben bei beiden VM's ebenfalls noch ein Privat-Network hinzugefügt, was es uns erlaubt die IP verteilung des DHCP einzugrenzen.  
+Als Provider haben wir uns für Virtualbox entschieden und als OS benutzen wir <a href="https://app.vagrantup.com/ubuntu/boxes/trusty64">Ubuntu/trusty64</a> normal und mit GUI (<a href="https://app.vagrantup.com/igorbrites/boxes/ubuntu-trusty64-gui">Ubuntu/trusty64-gui</a>)
 
 Code der VM1:
 ```
