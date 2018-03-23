@@ -73,6 +73,6 @@ Den DHCP haben wir wie folgt konfiguriert. Wir haben ihm den DNS von Google gege
         sudo sed -i '$arange 10.100.10.20 10.100.10.254;' /etc/dhcp/dhcpd.conf
         sudo sed -i '$aoption routers 10.100.10.1;' /etc/dhcp/dhcpd.conf
         sudo sed -i '$a}' /etc/dhcp/dhcpd.conf
-        sudo sed -i 'interface enp0s9'
+        sudo sed -i 'interface eth2'
 		    sudo service isc-dhcp-server restart
 ```
