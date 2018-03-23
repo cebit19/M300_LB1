@@ -43,7 +43,7 @@ Zum test des Apache Webservers haben wir noch ein HTML File eingefügt, welches 
 
 Code:
 ```
-udo rm /var/www/html/index.html
+sudo rm /var/www/html/index.html
         echo "<html lang="de">"| sudo tee -a /var/www/html/index.html
         echo "<head>"sudo tee -a /var/www/html/index.html
 		    echo "<title>Vorlage_Home</title>" | sudo tee -a /var/www/html/index.html
